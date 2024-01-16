@@ -5,10 +5,10 @@ public class Sketch2 extends PApplet {
 
   PImage pacmanBackground;
 
-  float playerOneX = 100;
-  float playerOneY = 400;
-  float playerTwoX = 700;
-  float playerTwoY = 400;
+  float playerOneX = 210;
+  float playerOneY = 390;
+  float playerTwoX = 590;
+  float playerTwoY = 390;
 
   boolean upPressed = false; 
   boolean downPressed = false;
@@ -44,8 +44,34 @@ public class Sketch2 extends PApplet {
   public void draw() {
 	background(pacmanBackground);
 
+  ellipse(playerOneX, playerOneY, 50, 50);
+  ellipse(playerTwoX, playerTwoY, 50, 50);
     
-    
+  if (wPressed) 
+  {
+    playerOneY--;
+  }
+
+  if (sPressed) 
+  {
+    playerOneY++; 
+  }
+
+  if (aPressed)
+  {
+    playerOneX--;
+  }
+
+  if (dPressed)
+  {
+    playerOneX++;
+  }
+
+  if (upPressed)
+  {
+    playerTwoY--;
+  }
+
   }
   
   // define other methods down here.
