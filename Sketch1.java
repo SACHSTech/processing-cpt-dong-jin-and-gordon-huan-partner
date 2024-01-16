@@ -4,6 +4,7 @@ import processing.core.PImage;
 public class Sketch1 extends PApplet {
 
   PImage pongbackground;
+  PImage spike;
 
   float fltPlayer1Y = 300;
   float fltPlayer2Y = 300;;
@@ -22,35 +23,39 @@ public class Sketch1 extends PApplet {
   float playerHeight = 220;
   boolean gameOver = false;
 
-
-
+  float fltObstacleY[] = new float[20];
+  float fltObstacleX[] = new float[20];
 
 	
 	
-  /**
-   * Called once at the beginning of execution, put your size all in this method
-   */
+ 
   public void settings() {
-	// put your size call here
+
     size(800, 800);
   }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
   public void setup() {
 
     pongbackground = loadImage("pong.png");
     pongbackground.resize(800,800);
 
+    spike = loadImage("spike.png.png");
+
+    for (int i = 0; i < fltObstacleY.length; i++) {
+      fltObstacleY[i] = random(height);
+    }
+    for (int i = 0; i < fltObstacleX.length; i++){
+      fltObstacleX[i] = random(width);
+    }
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
   public void draw() {
+
     background(pongbackground);
+
+    for (int i = 0; i < fltObstacleY.length; i++) {
+      image(spike,fltObstacleX[i], fltObstacleY[i], 100,100);
+    } 
 
     if (fltcircleX > width || fltcircleX < 0) {
       xSpeed = -xSpeed;
