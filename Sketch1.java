@@ -17,14 +17,14 @@ public class Sketch1 extends PApplet {
 
   float xSpeed = 2;
   float ySpeed = 2;
-  float fltcircleX = 100;
-  float fltcircleY = 0;
+  float fltcircleX = 350;
+  float fltcircleY = 350;
 
   float playerHeight = 220;
   boolean gameOver = false;
 
-  float fltObstacleY[] = new float[20];
-  float fltObstacleX[] = new float[20];
+  float fltObstacleY[] = new float[10];
+  float fltObstacleX[] = new float[10];
 
 	
 	
@@ -39,7 +39,7 @@ public class Sketch1 extends PApplet {
     pongbackground = loadImage("pong.png");
     pongbackground.resize(800,800);
 
-    spike = loadImage("spike.png.png");
+    spike = loadImage("spike.png");
 
     for (int i = 0; i < fltObstacleY.length; i++) {
       fltObstacleY[i] = random(height);
@@ -55,22 +55,27 @@ public class Sketch1 extends PApplet {
 
     for (int i = 0; i < fltObstacleY.length; i++) {
       image(spike,fltObstacleX[i], fltObstacleY[i], 100,100);
-    } 
 
+      if (dist(fltcircleX+10, fltcircleY, fltObstacleX[i], fltObstacleY[i]) <= 10) {
+        xSpeed = -xSpeed;
+        ySpeed = -ySpeed;
+    } 
+  }
+    //When the ball reaches the boundaries and spikes
     if (fltcircleX > width || fltcircleX < 0) {
       xSpeed = -xSpeed;
    }
    if (fltcircleY > height || fltcircleY < 0) {
       ySpeed = -ySpeed;
    }
-
+   //When the ball hits the paddles, the ball will bounce back
    if (fltcircleX - 80 < 0 && fltcircleY > fltPlayer1Y && fltcircleY < fltPlayer1Y + playerHeight) {
     xSpeed = -xSpeed;
  }
   if (fltcircleX + 70 > width && fltcircleY >= fltPlayer2Y && fltcircleY < fltPlayer2Y + playerHeight) {
     xSpeed = -xSpeed;
   }
-
+  //This checks if the ball hits the boundaries
   if (fltcircleX > width) {
     gameOver = true;
  }
@@ -96,17 +101,17 @@ public class Sketch1 extends PApplet {
    
     
     if (upPressed) {
-      fltPlayer1Y--;
+      fltPlayer1Y-=2;
     }
     if (downPressed) {
-      fltPlayer1Y++; 
+      fltPlayer1Y+=2; 
     }
 
     if (wPressed) {
-      fltPlayer2Y--;
+      fltPlayer2Y-=2;
     }
     if (sPressed) {
-      fltPlayer2Y++;
+      fltPlayer2Y+=2;
     }
   } 
   
