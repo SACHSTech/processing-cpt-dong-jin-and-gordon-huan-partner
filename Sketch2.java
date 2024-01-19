@@ -52,15 +52,14 @@ public class Sketch2 extends PApplet {
   {
     background(enterToStart);
 
-    if (keyPressed)
-    {
       if (keyCode == ENTER)
       {
         gameStart = true;
         introScreen = false;
       }
-    }
-  }
+      }
+    
+  
 
   if (gameStart)
   {
