@@ -4,11 +4,12 @@ import processing.core.PImage;
 public class Sketch2 extends PApplet {
 
   PImage pacmanBackground;
+  PImage enterToStart;
 
   float playerOneX = 210;
-  float playerOneY = 390;
+  float playerOneY = 385;
   float playerTwoX = 590;
-  float playerTwoY = 390;
+  float playerTwoY = 385;
 
   boolean upPressed = false; 
   boolean downPressed = false;
@@ -20,7 +21,10 @@ public class Sketch2 extends PApplet {
   boolean sPressed = false; 
   boolean dPressed = false; 
 	
-  boolean gameOver = false; 
+  boolean gameStart = false;
+  boolean introScreen = true;
+
+  boolean sendToPong = false; 
 	
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -36,43 +40,71 @@ public class Sketch2 extends PApplet {
    */
   public void setup() {
     pacmanBackground = loadImage("pac man background.jpg");
+    enterToStart = loadImage("intro screen.jpg");
   }
 
   /**
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-	background(pacmanBackground);
-
-  ellipse(playerOneX, playerOneY, 50, 50);
-  ellipse(playerTwoX, playerTwoY, 50, 50);
-    
-  if (wPressed) 
+	
+  if (introScreen)
   {
+    background(enterToStart);
+
+      if (keyCode == ENTER)
+      {
+        gameStart = true;
+        introScreen = false;
+      }
+      }
+    
+  
+
+  if (gameStart)
+  {
+  background(pacmanBackground);
+
+  fill(255,0,0);
+  ellipse(playerOneX, playerOneY, 40, 40);
+  fill (0,0,255);
+  ellipse(playerTwoX, playerTwoY, 40, 40);
+    
+  if (wPressed) {
     playerOneY--;
   }
-
-  if (sPressed) 
-  {
+  if (sPressed) {
     playerOneY++; 
   }
-
-  if (aPressed)
-  {
+  if (aPressed){
     playerOneX--;
   }
-
-  if (dPressed)
-  {
+  if (dPressed){
     playerOneX++;
   }
-
-  if (upPressed)
-  {
+  if (upPressed){
     playerTwoY--;
   }
-
+  if (downPressed){
+    playerTwoY++;
   }
+  if (leftPressed){
+    playerTwoX--;
+  }
+  if (rightPressed){
+    playerTwoX++;
+  }
+
+  if(sendToPong)
+  {
+    background(0);
+    textSize(30);
+    fill(255);
+    text("Play Pong!", 100, 100);
+  }
+  
+  }
+}
   
   // define other methods down here.
   public void keyPressed() {
