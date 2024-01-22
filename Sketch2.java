@@ -97,6 +97,7 @@ public class Sketch2 extends PApplet {
 
   if(sendToPong)
   {
+    gameStart = false;
     background(0);
     textSize(30);
     fill(255);
