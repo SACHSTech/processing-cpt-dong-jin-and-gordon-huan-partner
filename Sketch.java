@@ -1,36 +1,76 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Sketch extends PApplet {
+
+  //Initilaizing Global Variables For Pong
+  PImage pongbackground;
+  PImage spike;
+
+  float fltPlayer1Y = 300;
+  float fltPlayer2Y = 300;;
+
+  boolean UPPressed = false;
+  boolean DOWNPressed = false;
+
+  boolean WPressed = false;
+  boolean SPressed = false;
+
+  float xSpeed = 2;
+  float ySpeed = 2;
+  float fltcircleX = 300;
+  float fltcircleY = 300;
+
+  float playerHeight = 220;
+  boolean gameOver = false;
+
+  float fltObstacleY[] = new float[8];
+  float fltObstacleX[] = new float[8];
+
+  //Initlaizing Variables for Pac-Man
+  PImage pacmanBackground;
+  PImage enterToStart;
+
+  float playerOneX = 210;
+  float playerOneY = 385;
+  float playerTwoX = 590;
+  float playerTwoY = 385;
+
+  boolean upPressed = false; 
+  boolean downPressed = false;
+  boolean leftPressed = false;
+  boolean rightPressed = false;
+
+  boolean wPressed = false; 
+  boolean aPressed = false; 
+  boolean sPressed = false; 
+  boolean dPressed = false; 
+	
+  boolean gameStart = false;
+  boolean introScreen = true;
+
+  boolean sendToPong = false; 
+
+	
+  
 	
 	
-  /**
-   * Called once at the beginning of execution, put your size all in this method
-   */
+  
   public void settings() {
-	// put your size call here
-    size(400, 400);
+    size(800, 800);
   }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
+ 
   public void setup() {
     background(210, 255, 173);
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
+  
   public void draw() {
 	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
 
-    stroke(255);
-    line(50, 125, 70, 50);  
+      
   }
   
-  // define other methods down here.
+  
 }
