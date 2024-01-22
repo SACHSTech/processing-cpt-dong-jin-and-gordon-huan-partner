@@ -68,13 +68,13 @@ public class Sketch2 extends PApplet {
 
   }
   if (tutorialScreen)
-  {
-  background(0);
-  textSize(30);
-  fill(255);
-  text("tutorial here blah blah controls, power ups, objective of game, blah bla blah, alt to start game", 100, 100);
-  text("if you touch any walls, you get stopped from moving", 100, 600);
-  text("backspace to start game", 200, 400);
+    {
+    background(0);
+    textSize(30);
+    fill(255);
+    text("tutorial here blah blah controls, power ups, objective of game, blah bla blah, alt to start game", 100, 100);
+    text("if you touch any walls, you get stopped from moving", 100, 600);
+    text("backspace to start game", 200, 400);
   {
     if (keyCode == 8)
     {
@@ -91,28 +91,29 @@ public class Sketch2 extends PApplet {
   background(pacmanHitbox);
   if (get((int)playerOneX,(int)playerOneY) == color(0, 0, 0))
   {
-    if (playerOneSpeedX > 0)
+    if (dPressed)
     {
-      playerOneX -=2;
-      playerOneSpeedY = playerOneSpeedY *0;
+      playerOneX -= 5;
+      //playerOneSpeedY = playerOneSpeedY *0;
     }
-    if (playerOneSpeedX < 0)
+    if (aPressed)
     {
-      playerOneX += 2;
-      playerOneSpeedY = playerOneSpeedY *0;
+      playerOneX += 5;
+      //playerOneSpeedY = playerOneSpeedY *0;
     }
-    if (playerOneSpeedY > 0)
+    if (sPressed)
     {
-      playerOneY -= 2;
-      playerOneSpeedX = playerOneSpeedX *-1;
+      playerOneY -= 5;
+      //playerOneSpeedX = playerOneSpeedX * 0;
     }
-    if (playerOneSpeedY < 0)
+    if (wPressed)
     {
-      playerOneY += 2;
-      playerOneSpeedX = playerOneSpeedX * -1;
+      playerOneY += 5;
+      //playerOneSpeedX = playerOneSpeedX * 0;
     }
   }
-  
+
+
   // background and player placement
   background(pacmanBackground);
 
@@ -199,7 +200,7 @@ public class Sketch2 extends PApplet {
 
   if (playerTwoY <= 35)
   {
-    playerOneY = 36;
+    playerTwoY = 36;
   }
 
   if (playerTwoY >= 788)
