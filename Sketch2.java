@@ -28,8 +28,9 @@ public class Sketch2 extends PApplet {
   int ghostBuffX = 85;
   int ghostBuffY = 60;
 	
-  boolean gameStart = false;
   boolean introScreen = true;
+  boolean tutorialScreen = false;
+  boolean gameStart = false;
 
   boolean sendToPong = false; 
 	
@@ -61,11 +62,26 @@ public class Sketch2 extends PApplet {
     background(enterToStart);
       if (keyCode == ENTER)
       {
-        gameStart = true;
+        tutorialScreen = true;
         introScreen = false;
       }
+
+  }
+  if (tutorialScreen)
+  {
+  background(0);
+  textSize(30);
+  fill(255);
+  text("tutorial here blah blah controls, power ups, objective of game, blah bla blah, alt to start game", 100, 100);
+  text("alt to start game", 400, 400);
+  {
+    if (keyCode == ALT)
+    {
+      gameStart = true;
+      tutorialScreen = false;
     }
-    
+  }  
+}
 
   // when the game starts
   if (gameStart)
@@ -91,13 +107,13 @@ public class Sketch2 extends PApplet {
     ellipse (ghostBuffX, ghostBuffY, 40, 40);
   }
 
-
   // FIGURE OUT THE SPEED BOOST DOT AND PUT IT IN AN ARRAY OF AROUND FIVE POWER UPS AROUND THE MAP
   if (ghostBuff = true && ((dist(playerOneX, playerOneY, ghostBuffX, ghostBuffY)) < 35))
   {
+    ghostBuff = false;
     ghostBuffX = 0;
     ghostBuffY = 0;
-    playerOneSpeed = 3;
+    playerOneSpeed = playerOneSpeed *2;
   }
  
   
@@ -261,6 +277,9 @@ public class Sketch2 extends PApplet {
   {
     playerOneX = 684;
   }
+
+
+
 
 
   // collision detection against other player  
