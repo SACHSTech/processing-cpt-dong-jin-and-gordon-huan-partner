@@ -5,14 +5,17 @@ public class Sketch2 extends PApplet {
 
   PImage pacmanBackground;
   PImage enterToStart;
+  PImage pacmanHitbox;
 
   float playerOneX = 210;
-  float playerOneY = 385;
+  float playerOneY= 385;
   float playerTwoX = 590;
   float playerTwoY = 385;
 
-  int playerOneSpeed = 1;
-  int playerTwoSpeed = 1;
+  int playerOneSpeedX = 0;
+  int playerOneSpeedY = 0;
+  int playerTwoSpeedX = 0;
+  int playerTwoSpeedY = 0;
 
   boolean upPressed = false; 
   boolean downPressed = false;
@@ -24,10 +27,6 @@ public class Sketch2 extends PApplet {
   boolean sPressed = false; 
   boolean dPressed = false; 
 
-  boolean ghostBuff = true;
-  int ghostBuffX = 85;
-  int ghostBuffY = 60;
-	
   boolean introScreen = true;
   boolean tutorialScreen = false;
   boolean gameStart = false;
@@ -49,6 +48,7 @@ public class Sketch2 extends PApplet {
   public void setup() {
     pacmanBackground = loadImage("pac man background.jpg");
     enterToStart = loadImage("intro screen.jpg");
+    pacmanHitbox = loadImage("pac man map hitboxes.jpg");
   }
 
   /**
@@ -73,9 +73,10 @@ public class Sketch2 extends PApplet {
   textSize(30);
   fill(255);
   text("tutorial here blah blah controls, power ups, objective of game, blah bla blah, alt to start game", 100, 100);
-  text("alt to start game", 400, 400);
+  text("if you touch any walls, you get stopped from moving", 100, 600);
+  text("backspace to start game", 200, 400);
   {
-    if (keyCode == ALT)
+    if (keyCode == 8)
     {
       gameStart = true;
       tutorialScreen = false;
@@ -86,6 +87,32 @@ public class Sketch2 extends PApplet {
   // when the game starts
   if (gameStart)
   {
+  // hitbox map load
+  background(pacmanHitbox);
+  if (get((int)playerOneX,(int)playerOneY) == color(0, 0, 0))
+  {
+    if (playerOneSpeedX > 0)
+    {
+      playerOneX -=2;
+      playerOneSpeedY = playerOneSpeedY *0;
+    }
+    if (playerOneSpeedX < 0)
+    {
+      playerOneX += 2;
+      playerOneSpeedY = playerOneSpeedY *0;
+    }
+    if (playerOneSpeedY > 0)
+    {
+      playerOneY -= 2;
+      playerOneSpeedX = playerOneSpeedX *-1;
+    }
+    if (playerOneSpeedY < 0)
+    {
+      playerOneY += 2;
+      playerOneSpeedX = playerOneSpeedX * -1;
+    }
+  }
+  
   // background and player placement
   background(pacmanBackground);
 
@@ -99,75 +126,65 @@ public class Sketch2 extends PApplet {
   fill (0,0,255);
   ellipse(playerTwoX, playerTwoY, 40, 40);
 
-
-  // the ghost dot is white
-  if (ghostBuff)
-  {
-    fill (255,255,255);
-    ellipse (ghostBuffX, ghostBuffY, 40, 40);
-  }
-
-  // FIGURE OUT THE SPEED BOOST DOT AND PUT IT IN AN ARRAY OF AROUND FIVE POWER UPS AROUND THE MAP
-  if (ghostBuff = true && ((dist(playerOneX, playerOneY, ghostBuffX, ghostBuffY)) < 35))
-  {
-    ghostBuff = false;
-    ghostBuffX = 0;
-    ghostBuffY = 0;
-    playerOneSpeed = playerOneSpeed *2;
-  }
- 
   
   // movement controls for player 1
   if (wPressed) {
-    playerOneY-=playerOneSpeed;
+    playerOneSpeedY = -1;
+    playerOneY+=playerOneSpeedY;
   }
   if (sPressed) {
-    playerOneY+=playerOneSpeed; 
+    playerOneSpeedY = 1;
+    playerOneY+=playerOneSpeedY; 
   }
   if (aPressed){
-    playerOneX-=playerOneSpeed;
+    playerOneSpeedX = -1;
+    playerOneX+=playerOneSpeedX;
   }
   if (dPressed){
-    playerOneX+=playerOneSpeed;
+    playerOneSpeedX = 1;
+    playerOneX+=playerOneSpeedX;
   }
 
 
   // movement controls for player 2
   if (upPressed){
-    playerTwoY-=playerTwoSpeed;
+    playerTwoSpeedY = -1;
+    playerTwoY+=playerTwoSpeedY;
   }
   if (downPressed){
-    playerTwoY+=playerTwoSpeed;
+    playerTwoSpeedY = 1;
+    playerTwoY+=playerTwoSpeedY;
   }
   if (leftPressed){
-    playerTwoX-=playerTwoSpeed;
+    playerTwoSpeedX = -1;
+    playerTwoX+=playerTwoSpeedX;
   }
   if (rightPressed){
-    playerTwoX+=playerTwoSpeed;
+    playerTwoSpeedX = 1;
+    playerTwoX+=playerTwoSpeedX;
   }
-
 
   // player one colision detection against walls of maze map
-  if (playerOneX <= 61)
+  if (playerOneX <= 64)
   {
-    playerOneX = 62;
+    playerOneX = 65;
   }
 
-  if (playerOneX >= 727)
+  if (playerOneX >= 725)
   {
-    playerOneX = 726;
+    playerOneX = 724;
   }
 
-  if (playerOneY <= 35)
+  if (playerOneY <= 37)
   {
-    playerOneY = 36;
+    playerOneY = 38;
   }
 
-  if (playerOneY >= 788)
+  if (playerOneY >= 785)
   {
-    playerOneY = 787;
+    playerOneY = 784;
   }
-
+  
 
   // player two collision detection against walls of maze map
   if (playerTwoX <= 61)
@@ -189,98 +206,6 @@ public class Sketch2 extends PApplet {
   {
     playerTwoY = 787;
   }
-
-
-  // block 1 bottom side
-  if (playerOneY <= 134 && playerOneY >= 133 && playerOneX >= 113 && playerOneX <=184)
-  {
-    playerOneY = 135;
-  }
-  // block 1 top side
-  if (playerOneY >= 90 && playerOneY <= 91 && playerOneX >= 113 && playerOneX <=184)
-  {
-    playerOneY = 89;
-  }
-  // block 1 left side
-  if (playerOneX >= 112 && playerOneX <= 113 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 111;
-  }
-  // block 1 right side
-  if (playerOneX <= 185 && playerOneX >= 184 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 186;
-  }
-
-
-  // block 2 bottom side
-  if (playerOneY <= 134 && playerOneY >= 133 && playerOneX >= 237 && playerOneX <=333)
-  {
-    playerOneY = 135;
-  }
-  // block 2 top side
-  if (playerOneY >= 90 && playerOneY <= 91 && playerOneX >= 237 && playerOneX <=333)
-  {
-    playerOneY = 89;
-  }
-  // block 2 left side
-  if (playerOneX >= 236 && playerOneX <=237 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 235;
-  }
-  // block 2 right side
-  if (playerOneX <= 334 && playerOneX >= 333 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 335;
-  }
-
-
-  // block 3 bottom side
-  if (playerOneY <= 134 && playerOneY >= 133 && playerOneX >= 462 && playerOneX <=558)
-  {
-    playerOneY = 135;
-  }
-  // block 3 top side
-  if (playerOneY >= 90 && playerOneY <= 91 && playerOneX >= 462 && playerOneX <=558)
-  {
-    playerOneY = 89;
-  }
-  // block 3 left side
-  if (playerOneX >= 461 && playerOneX <=462 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 460;
-  }
-  // block 3 right side
-  if (playerOneX <=  560 && playerOneX >= 559 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 561;
-  }
-
-
-  // block 4 bottom side
-  if (playerOneY <= 134 && playerOneY >= 133 && playerOneX >= 612 && playerOneX <=683)
-  {
-    playerOneY = 135;
-  }
-  // block 4 top side
-  if (playerOneY >= 90 && playerOneY <= 91 && playerOneX >= 612 && playerOneX <=683)
-  {
-    playerOneY = 89;
-  }
-  // block 4 left side
-  if (playerOneX >= 611 && playerOneX <=612 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 610;
-  }
-  // block 4 right side
-  if (playerOneX <= 683 && playerOneX >= 682 && playerOneY >= 90 && playerOneY <= 134)
-  {
-    playerOneX = 684;
-  }
-
-
-
-
 
   // collision detection against other player  
   if ((dist(playerOneX, playerOneY, playerTwoX, playerTwoY)) < 35)
