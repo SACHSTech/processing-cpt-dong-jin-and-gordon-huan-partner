@@ -1,5 +1,5 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/eALKwJKC)
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=13289983&assignment_repo_type=AssignmentRepo)
-# Program Title (edit this)
+# PONG-MEN - Revenge of the G'Host
 
-Put your program description here.
+This game is based off of the two big hit retro games: Pong and Pac-Man. We added a twist to this game as we combined both Pac-Man and Pong into one. The ultimate pbjective of our game is to give the main antagonist of Pac-Man(the ghost) and give them a chance of redemption against Pac-Man by taking them both into a test of skill with Pong to decide the superior character. The two players have 3 hearts of health and each time you lose in a game of Pong, you lose one heart. But this is not a traditional game of Pong, there are obstacles that will impede the way of the ball and make it bounce right back. To face off against your friend in Pong, you will first need to play some two player Pac-Man, which is like traditional Pac-Man but when you both interact, it will send both of you to Pong.  
