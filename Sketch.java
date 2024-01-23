@@ -30,11 +30,23 @@ public class Sketch extends PApplet {
   //Initlaizing Variables for Pac-Man
   PImage pacmanBackground;
   PImage enterToStart;
+  PImage pacmanHitbox;
 
   float playerOneX = 210;
-  float playerOneY = 385;
+  float playerOneY= 385;
   float playerTwoX = 590;
   float playerTwoY = 385;
+
+  float speedBoostX[] = new float[5];
+  float speedBoostY[] = new float[5];
+  boolean speedBoostTaken[] = new boolean[5];
+
+  int playerOneSpeedX = 0;
+  int playerOneSpeedY = 0;
+  int playerTwoSpeedX = 0;
+  int playerTwoSpeedY = 0;
+  int playerOneSpeedBoosts = 0;
+  int playerTwoSpeedBoosts = 0;
 
   boolean upPressed = false; 
   boolean downPressed = false;
@@ -45,10 +57,10 @@ public class Sketch extends PApplet {
   boolean aPressed = false; 
   boolean sPressed = false; 
   boolean dPressed = false; 
-	
-  boolean gameStart = false;
-  boolean introScreen = true;
 
+  boolean introScreen = true;
+  boolean tutorialScreen = false;
+  boolean gameStart = false;
   boolean sendToPong = false; 
 
 	
