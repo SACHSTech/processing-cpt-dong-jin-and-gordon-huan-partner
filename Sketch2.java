@@ -99,15 +99,9 @@ public class Sketch2 extends PApplet {
     background(0);
     textSize(30);
     fill(255);
-    text("Players, Welcome to the Tutorial!", 200, 50);
-    text("Player 1, the red ball, will use WASD", 200, 100);
-    text("Player 2, the blue ball, will use the arrow keys", 150, 150);
-    text("The Objective of the game is to touch the other player's ball", 30, 200);
-    text("You can pick up the white speed boosts to move fast!", 90, 250);
-    text("Beware of walls! You will get stunned if you walk into walls.", 50, 300);
-    textSize(50);
-    fill(255,100,100);
-    text("Press BACKSPACE to start game.", 60, 600);
+    text("tutorial here blah blah controls, power ups, objective of game, blah bla blah, alt to start game", 100, 100);
+    text("if you touch any walls, you get stopped from moving", 100, 600);
+    text("backspace to start game", 200, 400);
   {
     if (keyCode ==8)
     {
