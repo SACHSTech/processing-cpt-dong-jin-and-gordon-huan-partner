@@ -24,8 +24,8 @@ public class Sketch1 extends PApplet {
   float playerHeight = 220;
   boolean gameOver = false;
 
-  float fltObstacleY[] = new float[5];
-  float fltObstacleX[] = new float[5];
+  float fltObstacleY[] = new float[10];
+  float fltObstacleX[] = new float[10];
 
 	
 	
@@ -57,7 +57,7 @@ public class Sketch1 extends PApplet {
     for (int i = 0; i < fltObstacleY.length; i++) {
       image(spike,fltObstacleX[i], fltObstacleY[i], 100,100);
 
-      if (dist(fltcircleX, fltcircleY, fltObstacleX[i], fltObstacleY[i]) < 20) {
+      if (dist(fltcircleX-10, fltcircleY-10, fltObstacleX[i]+10, fltObstacleY[i]+10) < 20 || dist(fltcircleX+10, fltcircleY+10, fltObstacleX[i]-10, fltObstacleY[i]-10) < 20) {
         xSpeed = -xSpeed;
         ySpeed = -ySpeed;
     } 
