@@ -92,6 +92,19 @@ speedBoostTaken[1] = false;
 speedBoostTaken[2] = false;
 speedBoostTaken[3] = false;
 speedBoostTaken[4] = false;
+
+pongbackground = loadImage("pong.png");
+    pongbackground.resize(800,800);
+
+    spike = loadImage("spike.png");
+
+    for (int i = 0; i < fltObstacleY.length; i++) {
+      fltObstacleY[i] = random(height);
+    }
+    for (int i = 0; i < fltObstacleX.length; i++){
+      fltObstacleX[i] = random(width);
+    }
+
 }
 
 
@@ -326,7 +339,73 @@ background(0);
 textSize(30);
 fill(255);
 text("Pong Time!", 100, 100);
+
+background(pongbackground);
+
+    for (int i = 0; i < fltObstacleY.length; i++) {
+      image(spike,fltObstacleX[i], fltObstacleY[i], 100,100);
+
+      if (dist(fltcircleX, fltcircleY, fltObstacleX[i], fltObstacleY[i]) < 20) {
+        xSpeed = -xSpeed;
+        ySpeed = -ySpeed;
+    } 
+  }
+    //When the ball reaches the boundaries and spikes
+    if (fltcircleX > width || fltcircleX < 0) {
+      xSpeed = -xSpeed;
+   }
+   if (fltcircleY > height || fltcircleY < 0) {
+      ySpeed = -ySpeed;
+   }
+   //When the ball hits the paddles, the ball will bounce back
+   if (fltcircleX - 80 < 0 && fltcircleY > fltPlayer1Y && fltcircleY < fltPlayer1Y + playerHeight) {
+    xSpeed = -xSpeed;
+ }
+  if (fltcircleX + 70 > width && fltcircleY >= fltPlayer2Y && fltcircleY < fltPlayer2Y + playerHeight) {
+    xSpeed = -xSpeed;
+  }
+  //This checks if the ball hits the boundaries
+  if (fltcircleX > width) {
+    gameOver = true;
+ }
+ if (fltcircleX < 0) {
+    gameOver = true;
+ }
+
+ if (gameOver) {
+  background(0);
+  textSize(32);
+  fill(255);
+  text("GAME OVER", width/2 - 100, height/2);
+  return; 
+ }
+
+  fltcircleX += xSpeed;
+  fltcircleY -= ySpeed;
+
+  rect(50, fltPlayer1Y, 20, 220);
+  rect(750, fltPlayer2Y, 20, 220); 
+  fill(255,255,0);
+  ellipse(fltcircleX, fltcircleY, 20, 20);
+
+   
+    
+    if (upPressed) {
+      fltPlayer2Y-=1.5;
+    }
+    if (downPressed) {
+      fltPlayer2Y+=1.5; 
+    }
+    if (wPressed) {
+      fltPlayer1Y-=1.5;
+    }
+    if (sPressed) {
+      fltPlayer1Y+=1.5;
+    }
+   
+
 }
+
 }      
 }
 
