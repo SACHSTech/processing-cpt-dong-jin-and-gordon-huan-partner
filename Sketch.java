@@ -44,6 +44,7 @@ public class Sketch extends PApplet {
   boolean tutorialScreen = false;
   boolean gameStart = false;
   boolean sendToPong = false; 
+  boolean blnCenterBall = false;
   //The health of Pacman and ghost
   int intHealth = 3;
   int intHealth2 = 3;
@@ -62,8 +63,8 @@ public class Sketch extends PApplet {
 
   float xSpeed = 2;
   float ySpeed = 2;
-  float fltcircleX = 300;
-  float fltcircleY = 300;
+  float fltcircleX;
+  float fltcircleY;
 
   float playerHeight = 220;
   boolean gameOver = false;
@@ -379,14 +380,14 @@ public class Sketch extends PApplet {
   {
     // when a player hits the other player 
     sendToPong = true;
+
   }
 
 
   // when a player touches another player, they get sent to play pong
-  if(sendToPong)
+  if(sendToPong == true)
   {
-    gameStart = false;
-    loop();
+    
     background(pongbackground);
 
     for (int i = 0; i < fltObstacleY.length; i++) {
@@ -413,15 +414,46 @@ public class Sketch extends PApplet {
   }
   //This checks if the ball hits the boundaries
   if (fltcircleX > width) {
-    gameOver = true;
+
+    sendToPong = false;
+    intHealth2 -= 1;
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    wPressed = false;
+    sPressed = false;
+    aPressed = false;
+    dPressed = false;
+    fltcircleX = 350;
+    fltcircleY = 350;
+    playerOneX = 210;
+    playerOneY= 385;
+    playerTwoX = 590;
+    playerTwoY = 385;
+    
  }
  if (fltcircleX < 0) {
-    gameOver = true;
+    sendToPong = false;
+      intHealth -= 1;
+      upPressed = false;
+      downPressed = false;
+      leftPressed = false;
+      rightPressed = false;
+      wPressed = false;
+      sPressed = false;
+      aPressed = false;
+      dPressed = false;
+    fltcircleX = 350;
+    fltcircleY = 350;
+    playerOneX = 210;
+    playerOneY= 385;
+    playerTwoX = 590;
+    playerTwoY = 385;
  }
-
- if (gameOver) {
-  gameStart = true;
-  if(fltcircleX >=700){
+/* 
+ if (sendToPong == false) {
+  if(fltcircleX > 700){
     intHealth--;
     return;
   }
@@ -430,15 +462,15 @@ public class Sketch extends PApplet {
     return;
   }
  }
-
-  fltcircleX += xSpeed;
-  fltcircleY -= ySpeed;
+ */
 
   rect(50, fltPlayer1Y, 20, 220);
   rect(750, fltPlayer2Y, 20, 220); 
   fill(255,255,0);
   ellipse(fltcircleX, fltcircleY, 20, 20);
 
+  fltcircleX += xSpeed;
+  fltcircleY -= ySpeed;
    
     
     if (UPPressed) {
@@ -463,11 +495,15 @@ public class Sketch extends PApplet {
     background(0);
     text("PLAYER 1 WINS", 200, 50);
   }
+
+  
 }
+
   
   // define other methods down here.
   // wasd and arrow keys
   public void keyPressed() {
+    if (sendToPong == false) {
     if (keyCode == UP) 
     {
       upPressed = true;
@@ -507,83 +543,87 @@ public class Sketch extends PApplet {
     {
       dPressed = true; 
     }
+  } else if (sendToPong == true) {
+
+    if (keyCode == UP) {
+      UPPressed = true;
+    }
+    else if (keyCode == DOWN) {
+      DOWNPressed = true;
+    }
+    else if (key == 'w'){
+      WPressed = true;
+    }
+
+    else if(key == 's'){
+      SPressed = true;
+    }
+
+
+  }
   }
 
 
   public void keyReleased() {
-    // wasd and arrow keys
-    if (keyCode == UP) 
-    {
-      upPressed = false;
-    }
-
-    else if (keyCode == DOWN) 
-    {
-      downPressed = false;
-    }
-
-    else if (keyCode == LEFT)
-    {
-      leftPressed = false;
-    }
-
-    else if (keyCode == RIGHT)
-    {
-      rightPressed = false;
-    }
-
-    else if (key == 'w')
-    {
-      wPressed = false;
-    }
-
-    else if (key == 's')
-    {
-      sPressed = false;
-    }
-
-    else if (key == 'a')
-    {
-      aPressed = false;
-    }
-
-    else if (key == 'd')
-    {
-      dPressed = false; 
-    }
-    }
-    //Movement for Pong
-    public void keyPressed2() {
-      if (keyCode == UP) {
-        UPPressed = true;
+    if (sendToPong == false) {
+    
+    
+      // wasd and arrow keys
+      if (keyCode == UP) 
+      {
+        upPressed = false;
       }
-      else if (keyCode == DOWN) {
-        DOWNPressed = true;
+
+      else if (keyCode == DOWN) 
+      {
+        downPressed = false;
       }
-      else if (key == 'w'){
-        WPressed = true;
+
+      else if (keyCode == LEFT)
+      {
+        leftPressed = false;
       }
-  
-      else if(key == 's'){
-        SPressed = true;
+
+      else if (keyCode == RIGHT)
+      {
+        rightPressed = false;
       }
-    }
-  
-  
-    public void keyReleased2() {
+
+      else if (key == 'w')
+      {
+        wPressed = false;
+      }
+
+      else if (key == 's')
+      {
+        sPressed = false;
+      }
+
+      else if (key == 'a')
+      {
+        aPressed = false;
+      }
+
+      else if (key == 'd')
+      {
+        dPressed = false; 
+      }
+    } else if (sendToPong == true) {
+
       if (keyCode == UP) {
         UPPressed = false;
       }
       else if (keyCode == DOWN) {
         DOWNPressed = false;
       }
-  
+
       else if (key == 'w'){
         WPressed = false;
       }
-  
+
       else if(key == 's'){
         SPressed = false;
       }
+    }
     }
   }
