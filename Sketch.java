@@ -9,23 +9,23 @@ public class Sketch extends PApplet {
   PImage pacmanHitbox;
 
   // spawn points for player 1 and 2 
-  float fltPlayerOneX = 210;
-  float fltPlayerOneY= 385;
-  float fltPlayerTwoX = 590;
-  float fltPlayerTwoY = 385;
+  float playerOneX = 210;
+  float playerOneY= 385;
+  float playerTwoX = 590;
+  float playerTwoY = 385;
 
   // coordinate for the speedboost spawn packs and whether or not the speedboost pack has been taken
-  float fltSpeedBoostX[] = new float[5];
-  float fltSpeedBoostY[] = new float[5];
-  boolean boolSpeedBoostTaken[] = new boolean[5];
+  float speedBoostX[] = new float[5];
+  float speedBoostY[] = new float[5];
+  boolean speedBoostTaken[] = new boolean[5];
 
   // player speeds and how many speed boosts they have picked up
-  int intPlayerOneSpeedX = 0;
-  int intPlayerOneSpeedY = 0;
-  int intPlayerTwoSpeedX = 0;
-  int intPlayerTwoSpeedY = 0;
-  int intPlayerOneSpeedBoosts = 0;
-  int intPlayerTwoSpeedBoosts = 0;
+  int playerOneSpeedX = 0;
+  int playerOneSpeedY = 0;
+  int playerTwoSpeedX = 0;
+  int playerTwoSpeedY = 0;
+  int playerOneSpeedBoosts = 0;
+  int playerTwoSpeedBoosts = 0;
 
   // controls for player 2
   boolean upPressed = false; 
@@ -40,10 +40,11 @@ public class Sketch extends PApplet {
   boolean dPressed = false; 
 
   // start the game with the intro screen and then go to the tutorial screen, then start game, then pong
-  boolean boolIntroScreen = true;
-  boolean boolTutorialScreen = false;
-  boolean boolGameStart = false;
-  boolean boolSendToPong = false; 
+  boolean introScreen = true;
+  boolean tutorialScreen = false;
+  boolean gameStart = false;
+  boolean sendToPong = false; 
+  boolean blnCenterBall = false;
   //The health of Pacman and ghost
   int intHealth = 3;
   int intHealth2 = 3;
@@ -62,8 +63,8 @@ public class Sketch extends PApplet {
 
   float xSpeed = 2;
   float ySpeed = 2;
-  float fltcircleX = 300;
-  float fltcircleY = 300;
+  float fltcircleX;
+  float fltcircleY;
 
   float playerHeight = 220;
   boolean gameOver = false;
@@ -76,6 +77,8 @@ public class Sketch extends PApplet {
 	// 800 by 800 classic retro size
     size(800, 800);
   }
+
+
   public void setup() {
     // load the images 
     pacmanBackground = loadImage("pac man background.jpg");
@@ -83,23 +86,23 @@ public class Sketch extends PApplet {
     pacmanHitbox = loadImage("pac man map hitboxes.jpg");
 
     // set values for the array of speedboost balls' x values y vales and whether they have been taken
-    fltSpeedBoostX[0] = 85;
-    fltSpeedBoostX[1] = 710;
-    fltSpeedBoostX[2] = 400;
-    fltSpeedBoostX[3] = 242;
-    fltSpeedBoostX[4] = 547;
+    speedBoostX[0] = 85;
+    speedBoostX[1] = 710;
+    speedBoostX[2] = 400;
+    speedBoostX[3] = 242;
+    speedBoostX[4] = 547;
 
-    fltSpeedBoostY[0] = 62;
-    fltSpeedBoostY[1] = 62;
-    fltSpeedBoostY[2] = 340;
-    fltSpeedBoostY[3] = 640;
-    fltSpeedBoostY[4] = 640;
+    speedBoostY[0] = 62;
+    speedBoostY[1] = 62;
+    speedBoostY[2] = 340;
+    speedBoostY[3] = 640;
+    speedBoostY[4] = 640;
 
-    boolSpeedBoostTaken[0] = false;
-    boolSpeedBoostTaken[1] = false;
-    boolSpeedBoostTaken[2] = false;
-    boolSpeedBoostTaken[3] = false;
-    boolSpeedBoostTaken[4] = false;
+    speedBoostTaken[0] = false;
+    speedBoostTaken[1] = false;
+    speedBoostTaken[2] = false;
+    speedBoostTaken[3] = false;
+    speedBoostTaken[4] = false;
     //Loading Pong Spikes and Background
     pongbackground = loadImage("pong.png");
     pongbackground.resize(800,800);
@@ -118,19 +121,19 @@ public class Sketch extends PApplet {
   public void draw() {
 	
   // when the intro screen is on, press enter to star the game and end the intro screen
-  if (boolIntroScreen)
+  if (introScreen)
   {
     background(enterToStart);
       if (keyCode == ENTER)
       {
         // we are now on the tutorial screen and the intro screen is false
-        boolTutorialScreen = true;
-        boolIntroScreen = false;
+        tutorialScreen = true;
+        introScreen = false;
       }
   }
 
   // the tutorial srceen is here 
-  if (boolTutorialScreen)
+  if (tutorialScreen)
     {
     background(0);
     textSize(30);
@@ -148,14 +151,14 @@ public class Sketch extends PApplet {
     if (keyCode ==8)
     {
       // when they press keycode 8, which is backspace, the game starts
-      boolGameStart = true;
-      boolTutorialScreen = false;
+      gameStart = true;
+      tutorialScreen = false;
     }
   }  
 }
 
   // when the game starts, run everything here
-  if (boolGameStart)
+  if (gameStart)
   {
     //The the main background
     background(pacmanHitbox);
@@ -163,44 +166,44 @@ public class Sketch extends PApplet {
     
 
   // if the player coordinates are on black blocks from the hitbox map, stop them from moving by bouncing them back 10 pixels
-  if (get((int)fltPlayerOneX,(int)fltPlayerOneY) == color(0, 0, 0))
+  if (get((int)playerOneX,(int)playerOneY) == color(0, 0, 0))
   {
     if (dPressed)
     {
-      fltPlayerOneX -= 10;
+      playerOneX -= 10;
     }
     if (aPressed)
     {
-      fltPlayerOneX += 10;
+      playerOneX += 10;
     }
     if (sPressed)
     {
-      fltPlayerOneY -= 10;
+      playerOneY -= 10;
     }
     if (wPressed)
     {
-      fltPlayerOneY += 10;
+      playerOneY += 10;
     }
   }
 
   // bounce back code for player two
-  if (get((int)fltPlayerTwoX,(int)fltPlayerTwoY) == color(0, 0, 0))
+  if (get((int)playerTwoX,(int)playerTwoY) == color(0, 0, 0))
   {
     if (rightPressed)
     {
-      fltPlayerTwoX -= 10;
+      playerTwoX -= 10;
     }
     if (leftPressed)
     {
-      fltPlayerTwoX += 10;
+      playerTwoX += 10;
     }
     if (downPressed)
     {
-      fltPlayerTwoY -= 10;
+      playerTwoY -= 10;
     }
     if (upPressed)
     {
-      fltPlayerTwoY += 10;
+      playerTwoY += 10;
     }    
   }
 
@@ -250,74 +253,74 @@ public class Sketch extends PApplet {
 
   // player one is red
   fill(255,0,0);
-  ellipse(fltPlayerOneX, fltPlayerOneY, 40, 40);
+  ellipse(playerOneX, playerOneY, 40, 40);
 
 
   // player two is blue
   fill (0,0,255);
-  ellipse(fltPlayerTwoX, fltPlayerTwoY, 40, 40);
+  ellipse(playerTwoX, playerTwoY, 40, 40);
 
 
   // use a for loop to put the speed boost spawns on the maze
   for (int i = 0; i < 5; i++)
   {
     // spawn them in only if they have not been taken yet
-    if ((dist(fltPlayerOneX,fltPlayerOneY,fltSpeedBoostX[i], fltSpeedBoostY[i])) < 25 && boolSpeedBoostTaken[i] == false)
+    if ((dist(playerOneX,playerOneY,speedBoostX[i], speedBoostY[i])) < 25 && speedBoostTaken[i] == false)
     {
       // we make the speed boost taken = true when a player touches it, and teleport it off screen to -100,-100 position
       // then the player gains a speed boost
-      boolSpeedBoostTaken[i] = true;
-      fltSpeedBoostX[i] = -100;
-      fltSpeedBoostY[i] = -100;
-      intPlayerOneSpeedBoosts ++;
+      speedBoostTaken[i] = true;
+      speedBoostX[i] = -100;
+      speedBoostY[i] = -100;
+      playerOneSpeedBoosts ++;
     }
-    if ((dist(fltPlayerTwoX, fltPlayerTwoY, fltSpeedBoostX[i], fltSpeedBoostY[i])) < 25 && boolSpeedBoostTaken[i] == false)
+    if ((dist(playerTwoX, playerTwoY, speedBoostX[i], speedBoostY[i])) < 25 && speedBoostTaken[i] == false)
     {
       // same thing down here just changed to what happens when player two eats the speed boost
-      boolSpeedBoostTaken[i] = true;
-      fltSpeedBoostX[i] = -100;
-      fltSpeedBoostY[i] = -100;
-      intPlayerTwoSpeedBoosts ++;
+      speedBoostTaken[i] = true;
+      speedBoostX[i] = -100;
+      speedBoostY[i] = -100;
+      playerTwoSpeedBoosts ++;
     }
   }
 
   // movement controls for player 1
   // the player speed is modified by speedboosts, adding 1.5 pixels of speed per speed boost
   if (wPressed) {
-    intPlayerOneSpeedY = -1;
-    fltPlayerOneY+= (intPlayerOneSpeedY - (1.5*intPlayerOneSpeedBoosts));
+    playerOneSpeedY = -1;
+    playerOneY+= (playerOneSpeedY - (1.5*playerOneSpeedBoosts));
   }
   if (sPressed) {
-    intPlayerOneSpeedY = 1;
-    fltPlayerOneY+= (intPlayerOneSpeedY + (1.5*intPlayerOneSpeedBoosts)); 
+    playerOneSpeedY = 1;
+    playerOneY+= (playerOneSpeedY + (1.5*playerOneSpeedBoosts)); 
   }
   if (aPressed){
-    intPlayerOneSpeedX = -1;
-    fltPlayerOneX+= (intPlayerOneSpeedX - (1.5*intPlayerOneSpeedBoosts));
+    playerOneSpeedX = -1;
+    playerOneX+= (playerOneSpeedX - (1.5*playerOneSpeedBoosts));
   }
   if (dPressed){
-    intPlayerOneSpeedX = 1;
-    fltPlayerOneX+= (intPlayerOneSpeedX + (1.5*intPlayerOneSpeedBoosts));
+    playerOneSpeedX = 1;
+    playerOneX+= (playerOneSpeedX + (1.5*playerOneSpeedBoosts));
   }
 
 
   // movement controls for player 2
   // same movement buffs for player 2
   if (upPressed){
-    intPlayerTwoSpeedY = -1;
-    fltPlayerTwoY+= (intPlayerTwoSpeedY - (intPlayerTwoSpeedBoosts));
+    playerTwoSpeedY = -1;
+    playerTwoY+= (playerTwoSpeedY - (playerTwoSpeedBoosts));
   }
   if (downPressed){
-    intPlayerTwoSpeedY = 1;
-    fltPlayerTwoY+= (intPlayerTwoSpeedY + (intPlayerTwoSpeedBoosts));
+    playerTwoSpeedY = 1;
+    playerTwoY+= (playerTwoSpeedY + (playerTwoSpeedBoosts));
   }
   if (leftPressed){
-    intPlayerTwoSpeedX = -1;
-    fltPlayerTwoX+= (intPlayerTwoSpeedX - (intPlayerTwoSpeedBoosts));
+    playerTwoSpeedX = -1;
+    playerTwoX+= (playerTwoSpeedX - (playerTwoSpeedBoosts));
   }
   if (rightPressed){
-    intPlayerTwoSpeedX = 1;
-    fltPlayerTwoX+= (intPlayerTwoSpeedX + (intPlayerTwoSpeedBoosts));
+    playerTwoSpeedX = 1;
+    playerTwoX+= (playerTwoSpeedX + (playerTwoSpeedBoosts));
   }
 
   // for loop for get access to all speed boost coordinates
@@ -325,67 +328,66 @@ public class Sketch extends PApplet {
   {
     // fill the circles around the map with white color 
     fill(255,255,255);
-    ellipse (fltSpeedBoostX[i], fltSpeedBoostY[i], 25, 25);
+    ellipse (speedBoostX[i], speedBoostY[i], 25, 25);
   }
 
 
   // player one colision detection against outer walls of maze map
-  if (fltPlayerOneX <= 64)
+  if (playerOneX <= 64)
   {
-    fltPlayerOneX = 65;
+    playerOneX = 65;
   }
 
-  if (fltPlayerOneX >= 725)
+  if (playerOneX >= 725)
   {
-    fltPlayerOneX = 724;
+    playerOneX = 724;
   }
 
-  if (fltPlayerOneY <= 37)
+  if (playerOneY <= 37)
   {
-    fltPlayerOneY = 38;
+    playerOneY = 38;
   }
 
-  if (fltPlayerOneY >= 785)
+  if (playerOneY >= 785)
   {
-    fltPlayerOneY = 784;
+    playerOneY = 784;
   }
   
 
   // player two collision detection against outer walls of maze map
-  if (fltPlayerTwoX <= 64)
+  if (playerTwoX <= 64)
   {
-    fltPlayerTwoX = 69;
+    playerTwoX = 69;
   }
 
-  if (fltPlayerTwoX >= 725)
+  if (playerTwoX >= 725)
   {
-    fltPlayerTwoX = 720;
+    playerTwoX = 720;
   }
 
-  if (fltPlayerTwoY <= 37)
+  if (playerTwoY <= 37)
   {
-    fltPlayerTwoY = 42;
+    playerTwoY = 42;
   }
 
-  if (fltPlayerTwoY >= 785)
+  if (playerTwoY >= 785)
   {
-    fltPlayerTwoY = 780;
+    playerTwoY = 780;
   }
 
   // collision detection against other player  
-  if ((dist(fltPlayerOneX, fltPlayerOneY, fltPlayerTwoX, fltPlayerTwoY)) < 35)
+  if ((dist(playerOneX, playerOneY, playerTwoX, playerTwoY)) < 35)
   {
     // when a player hits the other player 
-    boolSendToPong = true;
-    System.out.println("pong true");
+    sendToPong = true;
+
   }
 
 
   // when a player touches another player, they get sent to play pong
-  if(boolSendToPong)
+  if(sendToPong == true)
   {
-    System.out.println("pong");
-    boolGameStart = false;
+    
     background(pongbackground);
 
     for (int i = 0; i < fltObstacleY.length; i++) {
@@ -395,7 +397,7 @@ public class Sketch extends PApplet {
         xSpeed = -xSpeed;
         ySpeed = -ySpeed;
     } 
-    }
+  }
     //When the ball reaches the boundaries and spikes
     if (fltcircleX > width || fltcircleX < 0) {
       xSpeed = -xSpeed;
@@ -406,21 +408,52 @@ public class Sketch extends PApplet {
    //When the ball hits the paddles, the ball will bounce back
    if (fltcircleX - 80 < 0 && fltcircleY > fltPlayer1Y && fltcircleY < fltPlayer1Y + playerHeight) {
     xSpeed = -xSpeed;
-  }
+ }
   if (fltcircleX + 70 > width && fltcircleY >= fltPlayer2Y && fltcircleY < fltPlayer2Y + playerHeight) {
     xSpeed = -xSpeed;
   }
   //This checks if the ball hits the boundaries
   if (fltcircleX > width) {
-    gameOver = true;
-  }
- if (fltcircleX < 0) {
-    gameOver = true;
-  }
 
- if (gameOver) {
-  boolGameStart = true;
-  if(fltcircleX >=700){
+    sendToPong = false;
+    intHealth2 -= 1;
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    wPressed = false;
+    sPressed = false;
+    aPressed = false;
+    dPressed = false;
+    fltcircleX = 350;
+    fltcircleY = 350;
+    playerOneX = 210;
+    playerOneY= 385;
+    playerTwoX = 590;
+    playerTwoY = 385;
+    
+ }
+ if (fltcircleX < 0) {
+    sendToPong = false;
+      intHealth -= 1;
+      upPressed = false;
+      downPressed = false;
+      leftPressed = false;
+      rightPressed = false;
+      wPressed = false;
+      sPressed = false;
+      aPressed = false;
+      dPressed = false;
+    fltcircleX = 350;
+    fltcircleY = 350;
+    playerOneX = 210;
+    playerOneY= 385;
+    playerTwoX = 590;
+    playerTwoY = 385;
+ }
+/* 
+ if (sendToPong == false) {
+  if(fltcircleX > 700){
     intHealth--;
     return;
   }
@@ -429,16 +462,17 @@ public class Sketch extends PApplet {
     return;
   }
  }
-
-  fltcircleX += xSpeed;
-  fltcircleY -= ySpeed;
+ */
 
   rect(50, fltPlayer1Y, 20, 220);
   rect(750, fltPlayer2Y, 20, 220); 
   fill(255,255,0);
   ellipse(fltcircleX, fltcircleY, 20, 20);
 
+  fltcircleX += xSpeed;
+  fltcircleY -= ySpeed;
    
+    
     if (UPPressed) {
       fltPlayer2Y-=1.5;
     }
@@ -461,11 +495,15 @@ public class Sketch extends PApplet {
     background(0);
     text("PLAYER 1 WINS", 200, 50);
   }
+
+  
 }
+
   
   // define other methods down here.
   // wasd and arrow keys
   public void keyPressed() {
+    if (sendToPong == false) {
     if (keyCode == UP) 
     {
       upPressed = true;
@@ -505,83 +543,87 @@ public class Sketch extends PApplet {
     {
       dPressed = true; 
     }
+  } else if (sendToPong == true) {
+
+    if (keyCode == UP) {
+      UPPressed = true;
+    }
+    else if (keyCode == DOWN) {
+      DOWNPressed = true;
+    }
+    else if (key == 'w'){
+      WPressed = true;
+    }
+
+    else if(key == 's'){
+      SPressed = true;
+    }
+
+
+  }
   }
 
 
   public void keyReleased() {
-    // wasd and arrow keys
-    if (keyCode == UP) 
-    {
-      upPressed = false;
-    }
-
-    else if (keyCode == DOWN) 
-    {
-      downPressed = false;
-    }
-
-    else if (keyCode == LEFT)
-    {
-      leftPressed = false;
-    }
-
-    else if (keyCode == RIGHT)
-    {
-      rightPressed = false;
-    }
-
-    else if (key == 'w')
-    {
-      wPressed = false;
-    }
-
-    else if (key == 's')
-    {
-      sPressed = false;
-    }
-
-    else if (key == 'a')
-    {
-      aPressed = false;
-    }
-
-    else if (key == 'd')
-    {
-      dPressed = false; 
-    }
-    }
-    //Movement for Pong
-    public void keyPressed2() {
-      if (keyCode == UP) {
-        UPPressed = true;
+    if (sendToPong == false) {
+    
+    
+      // wasd and arrow keys
+      if (keyCode == UP) 
+      {
+        upPressed = false;
       }
-      else if (keyCode == DOWN) {
-        DOWNPressed = true;
+
+      else if (keyCode == DOWN) 
+      {
+        downPressed = false;
       }
-      else if (key == 'w'){
-        WPressed = true;
+
+      else if (keyCode == LEFT)
+      {
+        leftPressed = false;
       }
-  
-      else if(key == 's'){
-        SPressed = true;
+
+      else if (keyCode == RIGHT)
+      {
+        rightPressed = false;
       }
-    }
-  
-  
-    public void keyReleased2() {
+
+      else if (key == 'w')
+      {
+        wPressed = false;
+      }
+
+      else if (key == 's')
+      {
+        sPressed = false;
+      }
+
+      else if (key == 'a')
+      {
+        aPressed = false;
+      }
+
+      else if (key == 'd')
+      {
+        dPressed = false; 
+      }
+    } else if (sendToPong == true) {
+
       if (keyCode == UP) {
         UPPressed = false;
       }
       else if (keyCode == DOWN) {
         DOWNPressed = false;
       }
-  
+
       else if (key == 'w'){
         WPressed = false;
       }
-  
+
       else if(key == 's'){
         SPressed = false;
       }
+    }
     }
   }
