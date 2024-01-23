@@ -99,7 +99,7 @@ public class Sketch2 extends PApplet {
     background(0);
     textSize(30);
     fill(255);
-    text("Players, Welcome to the Tutorial!", 200, 50);
+    text("Players, welcome to the tutorial!", 200, 50);
     text("Player 1, the red ball, will use WASD", 200, 100);
     text("Player 2, the blue ball, will use the arrow keys", 150, 150);
     text("The Objective of the game is to touch the other player's ball", 30, 200);
