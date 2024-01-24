@@ -1,6 +1,11 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * A program Sketch2.java that allows you to play the pong men game, and gives you a tutorial
+ * @author: D. Jin
+ */
+
 public class Sketch2 extends PApplet {
 
   // background for game, intro opening screen, and hitbox map
@@ -109,7 +114,7 @@ public class Sketch2 extends PApplet {
     fill(255,100,100);
     text("Press BACKSPACE to start game.", 60, 600);
   {
-    if (keyCode ==8)
+    if (keyCode == 8)
     {
       // when they press keycode 8, which is backspace, the game starts
       boolGameStart = true;
@@ -203,6 +208,14 @@ public class Sketch2 extends PApplet {
     }
   }
 
+    // for loop for get access to all speed boost coordinates
+    for (int i = 0; i < 5; i++) 
+    {
+      // fill the circles around the map with white color 
+      fill(255,255,255);
+      ellipse (fltSpeedBoostX[i], fltSpeedBoostY[i], 25, 25);
+    }
+
   // movement controls for player 1
   // the player speed is modified by speedboosts, adding 1.5 pixels of speed per speed boost
   if (wPressed) {
@@ -240,14 +253,6 @@ public class Sketch2 extends PApplet {
   if (rightPressed){
     intPlayerTwoSpeedX = 1;
     fltPlayerTwoX+= (intPlayerTwoSpeedX + (intPlayerTwoSpeedBoosts));
-  }
-
-  // for loop for get access to all speed boost coordinates
-  for (int i = 0; i < 5; i++) 
-  {
-    // fill the circles around the map with white color 
-    fill(255,255,255);
-    ellipse (fltSpeedBoostX[i], fltSpeedBoostY[i], 25, 25);
   }
 
 
