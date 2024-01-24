@@ -1,3 +1,10 @@
+/**
+  * Demonstrate the use of javadocs
+  * @author: E.Fabroa
+  */
+
+
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -44,7 +51,6 @@ public class Sketch extends PApplet {
   boolean tutorialScreen = false;
   boolean gameStart = false;
   boolean sendToPong = false; 
-  boolean blnCenterBall = false;
   //The health of Pacman and ghost
   int intHealth = 3;
   int intHealth2 = 3;
@@ -68,9 +74,9 @@ public class Sketch extends PApplet {
 
   float playerHeight = 220;
   boolean gameOver = false;
-
-  float fltObstacleY[] = new float[5];
-  float fltObstacleX[] = new float[5];
+  //Array for the spikes
+  float fltObstacleY[] = new float[7];
+  float fltObstacleX[] = new float[7];
 	
 
   public void settings() {
@@ -389,11 +395,11 @@ public class Sketch extends PApplet {
   {
     
     background(pongbackground);
-
+    //Spawns in the spikes according to the random positions of the array
     for (int i = 0; i < fltObstacleY.length; i++) {
       image(spike,fltObstacleX[i], fltObstacleY[i], 100,100);
-
-      if (dist(fltcircleX, fltcircleY, fltObstacleX[i], fltObstacleY[i]) < 20) {
+      //Checks the collision of the ball to the spikes for each position
+      if (dist(fltcircleX-10, fltcircleY-10, fltObstacleX[i]+10, fltObstacleY[i]+10) < 20 || dist(fltcircleX+10, fltcircleY-10, fltObstacleX[i]-10, fltObstacleY[i]-10) < 20) {
         xSpeed = -xSpeed;
         ySpeed = -ySpeed;
     } 
@@ -412,9 +418,8 @@ public class Sketch extends PApplet {
   if (fltcircleX + 70 > width && fltcircleY >= fltPlayer2Y && fltcircleY < fltPlayer2Y + playerHeight) {
     xSpeed = -xSpeed;
   }
-  //This checks if the ball hits the boundaries
+  //This checks if the ball hits the boundaries and resets the position of the ball and players
   if (fltcircleX > width) {
-
     sendToPong = false;
     intHealth2 -= 1;
     upPressed = false;
@@ -433,17 +438,18 @@ public class Sketch extends PApplet {
     playerTwoY = 385;
     
  }
+ //If the balls hits the other side, it will minus health from the other player
  if (fltcircleX < 0) {
     sendToPong = false;
-      intHealth -= 1;
-      upPressed = false;
-      downPressed = false;
-      leftPressed = false;
-      rightPressed = false;
-      wPressed = false;
-      sPressed = false;
-      aPressed = false;
-      dPressed = false;
+    intHealth -= 1;
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    wPressed = false;
+    sPressed = false;
+    aPressed = false;
+    dPressed = false;
     fltcircleX = 350;
     fltcircleY = 350;
     playerOneX = 210;
@@ -451,28 +457,16 @@ public class Sketch extends PApplet {
     playerTwoX = 590;
     playerTwoY = 385;
  }
-/* 
- if (sendToPong == false) {
-  if(fltcircleX > 700){
-    intHealth--;
-    return;
-  }
-  else{
-    intHealth2--;
-    return;
-  }
- }
- */
-
+  //Draws the Paddle and the Ball
   rect(50, fltPlayer1Y, 20, 220);
   rect(750, fltPlayer2Y, 20, 220); 
   fill(255,255,0);
   ellipse(fltcircleX, fltcircleY, 20, 20);
-
+  //Makes the ball Move
   fltcircleX += xSpeed;
   fltcircleY -= ySpeed;
    
-    
+    //Movement of the paddles
     if (UPPressed) {
       fltPlayer2Y-=1.5;
     }
@@ -487,6 +481,7 @@ public class Sketch extends PApplet {
     }
   }
   }
+  //Will print out who lost and who won according to which heakth bar is at 0
   if (intHealth == 0){
     background(0);
     text("PLAYER 2 WINS", 200, 50);
@@ -496,79 +491,86 @@ public class Sketch extends PApplet {
     text("PLAYER 1 WINS", 200, 50);
   }
 
-  
 }
 
   
-  // define other methods down here.
-  // wasd and arrow keys
+  
+  /**
+   * Detecting if the WASD and Arrow keys are being pressed when or when not playing Pong
+   * @author: Gordon H. and Dong J.
+   * This is a recognized built in method in processing
+   */
   public void keyPressed() {
+    
     if (sendToPong == false) {
-    if (keyCode == UP) 
-    {
-      upPressed = true;
-    }
+      //Keys to move when players are not in Pong
+      if (keyCode == UP) 
+      {
+        upPressed = true;
+      }
 
-    else if (keyCode == DOWN) 
-    {
-      downPressed = true;
-    }
+      else if (keyCode == DOWN) 
+      {
+        downPressed = true;
+      }
 
-    else if (keyCode == LEFT)
-    {
-      leftPressed = true;
-    }
+      else if (keyCode == LEFT)
+      {
+        leftPressed = true;
+      }
 
-    else if (keyCode == RIGHT)
-    {
-      rightPressed = true;
-    }
+      else if (keyCode == RIGHT)
+      {
+        rightPressed = true;
+      }
 
-    else if (key == 'w')
-    {
-      wPressed = true;
-    }
+      else if (key == 'w')
+      {
+        wPressed = true;
+      }
 
-    else if (key == 's')
-    {
-      sPressed = true;
-    }
+      else if (key == 's')
+      {
+        sPressed = true;
+      }
 
-    else if (key == 'a')
-    {
-      aPressed = true;
-    }
+      else if (key == 'a')
+      {
+        aPressed = true;
+      }
 
-    else if (key == 'd')
-    {
-      dPressed = true; 
-    }
+      else if (key == 'd')
+      {
+        dPressed = true; 
+      }
   } else if (sendToPong == true) {
+      //Keys to move players when they are in Pong
+      if (keyCode == UP) {
+        UPPressed = true;
+      }
+      else if (keyCode == DOWN) {
+        DOWNPressed = true;
+      }
+      else if (key == 'w'){
+        WPressed = true;
+      }
 
-    if (keyCode == UP) {
-      UPPressed = true;
+      else if(key == 's'){
+        SPressed = true;
+      }
     }
-    else if (keyCode == DOWN) {
-      DOWNPressed = true;
-    }
-    else if (key == 'w'){
-      WPressed = true;
-    }
-
-    else if(key == 's'){
-      SPressed = true;
-    }
-
-
-  }
   }
 
-
+   /**
+   * Detecting if the WASD and Arrow keys are being released when or when not playing Pong
+   * @author: Gordon H. and Dong J.
+   * This is a recognized built in method in processing
+   */
   public void keyReleased() {
     if (sendToPong == false) {
     
     
-      // wasd and arrow keys
+      // wasd and arrow keys if it is not in Pong
       if (keyCode == UP) 
       {
         upPressed = false;
@@ -609,21 +611,21 @@ public class Sketch extends PApplet {
         dPressed = false; 
       }
     } else if (sendToPong == true) {
+        //Key released when in Pong
+        if (keyCode == UP) {
+          UPPressed = false;
+        }
+        else if (keyCode == DOWN) {
+          DOWNPressed = false;
+        }
 
-      if (keyCode == UP) {
-        UPPressed = false;
-      }
-      else if (keyCode == DOWN) {
-        DOWNPressed = false;
-      }
+        else if (key == 'w'){
+          WPressed = false;
+        }
 
-      else if (key == 'w'){
-        WPressed = false;
+        else if(key == 's'){
+          SPressed = false;
+        }
       }
-
-      else if(key == 's'){
-        SPressed = false;
-      }
-    }
     }
   }
